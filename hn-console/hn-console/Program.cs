@@ -11,8 +11,8 @@ namespace hn_console
     {
         static void Main(string[] args)
         {
-            Database db = new Database();
-            db.GetData();
+            HnService service = new HnService();
+            service.GetItems();
         }
     }
 }
