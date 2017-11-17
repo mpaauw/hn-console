@@ -36,11 +36,36 @@ namespace hn_console.Data
         public List<Item> GetItems()
         {
             List<Item> items = new List<Item>();
-            foreach(int id in GetItemIds())
+
+            // limit to only first five posts for testing:
+            List<int> itemIds = GetItemIds();
+            for(int i = 0; i < 5; i++)
             {
-                items.Add(GetItem(id));
+                items.Add(SetItemChildren(GetItem(itemIds[i])));
             }
+
+            //foreach(int id in GetItemIds())
+            //{
+            //    items.Add(SetItemChildren(GetItem(id)));
+            //}
             return items;
+        }
+
+        public Item SetItemChildren(Item item)
+        {
+            if(item.kids == null)
+            {
+                return item;
+            }
+            item.children = new List<Item>();
+            for(int i = 0; i < item.kids.Length; i++)
+            {
+                int kid = item.kids[i];
+                Item child = GetItem(kid);
+                child = SetItemChildren(child);
+                item.children.Add(child);
+            }
+            return item;
         }
     }
 }
