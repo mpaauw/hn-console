@@ -10,6 +10,7 @@ namespace hn_console
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
