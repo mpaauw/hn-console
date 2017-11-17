@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using hn_console.Model;
 
 namespace hn_console.Data
 {
-    interface IDatabase
+    interface IHnService
     {
-        void GetData();
+        List<int> GetItemIds();
+
+        Item GetItem(int itemId);
+
+        List<Item> GetItems();
     }
 }
