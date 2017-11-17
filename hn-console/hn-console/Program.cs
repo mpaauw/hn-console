@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using hn_console.Data;
 
 namespace hn_console
 {
@@ -10,7 +11,8 @@ namespace hn_console
     {
         static void Main(string[] args)
         {
-
+            Database db = new Database();
+            db.GetData();
         }
     }
 }
