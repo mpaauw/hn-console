@@ -52,6 +52,8 @@
     <Compile Include="Data\HnService.cs" />
     <Compile Include="Data\IHnService.cs" />
     <Compile Include="Data\IRestService.cs" />
+    <Compile Include="Interface\ConsoleService.cs" />
+    <Compile Include="Interface\IConsoleService.cs" />
     <Compile Include="Model\ItemType.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Data\RestService.cs" />
