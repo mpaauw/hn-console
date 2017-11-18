@@ -15,6 +15,8 @@ namespace hn_console.Data
 
         List<Item> GetItems();
 
+        List<Item> SetItemChildren(List<Item> items);
+
         Item SetItemChildren(Item item);
     }
 }

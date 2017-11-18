@@ -14,10 +14,23 @@ namespace hn_console.Data
         private string _endpointParams = @"topstories";
         private string _endpointFormat = @".json";
         private readonly string[] _acceptHeaders = { "application/json" };
+        private const int _numStories = 20;
 
         public HnService()
         {
 
+        }
+
+        // NOTE: currently limited to # of posts specified within private vars
+        public List<int> GetItemIds()
+        {
+            RestService<List<int>> restService = new RestService<List<int>>();
+            List<int> itemIds = restService.GetJsonData(_endpoint, _endpointParams, _endpointFormat, _acceptHeaders);
+            for (int i = _numStories; i < itemIds.Count; i++) // remove all posts past a certain #; in order to save processing time
+            {
+                itemIds.RemoveAt(i);
+            }
+            return itemIds;
         }
 
         public Item GetItem(int itemId)
@@ -27,38 +40,35 @@ namespace hn_console.Data
             return restService.GetJsonData(_endpoint, parameters, _endpointFormat, _acceptHeaders);
         }
 
-        public List<int> GetItemIds()
-        {
-            RestService<List<int>> restService = new RestService<List<int>>();
-            return restService.GetJsonData(_endpoint, _endpointParams, _endpointFormat, _acceptHeaders);
-        }
-
         public List<Item> GetItems()
         {
-            List<Item> items = new List<Item>();
-
-            // limit to only first five posts for testing:
             List<int> itemIds = GetItemIds();
-            for(int i = 0; i < 5; i++)
+            List<Item> items = new List<Item>();
+            for(int i = 0; i < _numStories; i++)
             {
-                items.Add(SetItemChildren(GetItem(itemIds[i])));
+                items.Add(GetItem(itemIds[i]));
             }
+            return items;
+        }
 
-            //foreach(int id in GetItemIds())
-            //{
-            //    items.Add(SetItemChildren(GetItem(id)));
-            //}
+        public List<Item> SetItemChildren(List<Item> items)
+        {
+            for(int i = 0; i < items.Count; i++)
+            {
+                Item item = items[i];
+                item = SetItemChildren(item); // get rid of assignment? use ref types
+            }
             return items;
         }
 
         public Item SetItemChildren(Item item)
         {
-            if(item.kids == null)
+            if (item.kids == null)
             {
                 return item;
             }
             item.children = new List<Item>();
-            for(int i = 0; i < item.kids.Length; i++)
+            for (int i = 0; i < item.kids.Length; i++)
             {
                 int kid = item.kids[i];
                 Item child = GetItem(kid);
