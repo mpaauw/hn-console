@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using hn_console.Data;
+using hn_console.Interface;
 
 namespace hn_console
 {
@@ -11,8 +12,13 @@ namespace hn_console
     {
         static void Main(string[] args)
         {
-            HnService service = new HnService();
-            service.GetItems();
+            HnService hnService = new HnService();
+            ConsoleService consoleService = new ConsoleService();
+            consoleService.DisplayStories(hnService.GetItems());
+
+
+
+            Console.ReadLine();
         }
     }
 }
