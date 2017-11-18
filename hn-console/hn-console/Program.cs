@@ -14,7 +14,7 @@ namespace hn_console
         {
             HnService hnService = new HnService();
             ConsoleService consoleService = new ConsoleService();
-            consoleService.DisplayStories(hnService.GetItems());
+            consoleService.NavigateStories(hnService.GetItems(), 0);
 
 
 
