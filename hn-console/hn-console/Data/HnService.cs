@@ -51,17 +51,17 @@ namespace hn_console.Data
             return items;
         }
 
-        public List<Item> SetItemChildren(List<Item> items)
+        public List<Item> GetItemsChildren(List<Item> items)
         {
             for(int i = 0; i < items.Count; i++)
             {
                 Item item = items[i];
-                item = SetItemChildren(item); // get rid of assignment? use ref types
+                item = GetItemChildren(item); // get rid of assignment? use ref types
             }
             return items;
         }
 
-        public Item SetItemChildren(Item item)
+        public Item GetItemChildren(Item item)
         {
             if (item.kids == null)
             {
@@ -72,7 +72,7 @@ namespace hn_console.Data
             {
                 int kid = item.kids[i];
                 Item child = GetItem(kid);
-                child = SetItemChildren(child);
+                child = GetItemChildren(child);
                 item.children.Add(child);
             }
             return item;
