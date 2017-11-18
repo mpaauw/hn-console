@@ -11,7 +11,7 @@ namespace hn_console.Interface
     {
         void DisplayStories(List<Item> stories);
 
-        void NavigateStories(List<Item> stories);
+        void NavigateStories(List<Item> stories, int cursorPosition);
 
         void MaximizeConsoleWindow();
     }

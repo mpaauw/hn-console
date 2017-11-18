@@ -41,9 +41,41 @@ namespace hn_console.Interface
             Console.WriteLine("\nPress ESC to quit.");
         }
 
-        public void NavigateStories(List<Item> stories)
+        public void NavigateStories(List<Item> stories, int cursorPosition)
         {
-
+            DisplayStories(stories);
+            Console.SetCursorPosition(0, 0);
+            int currentPosition = -1;
+            if (stories.Count > 0)
+            {
+                currentPosition = 0;
+            }
+            ConsoleKeyInfo keyInfo;
+            while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
+            {
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        if (currentPosition < stories.Count - 1)
+                        {
+                            currentPosition += 1;
+                        }
+                        Console.SetCursorPosition(0, currentPosition);
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (currentPosition > 0)
+                        {
+                            currentPosition -= 1;
+                        }
+                        Console.SetCursorPosition(0, currentPosition);
+                        break;
+                    case ConsoleKey.Enter:
+                        Item story = stories[currentPosition];
+                        Console.Clear();
+                        Console.WriteLine("You have chosen topic: " + story.title);
+                        break;
+                }
+            }
         }
 
         public void MaximizeConsoleWindow()
