@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using hn_console.Model;
 using System.Runtime.InteropServices;
+using hn_console.Data;
 
 namespace hn_console.Interface
 {
@@ -20,25 +21,12 @@ namespace hn_console.Interface
         private const int MINIMIZE = 6;
         private const int RESTORE = 9;
 
+        private HnService hnService;
+
         public ConsoleService()
         {
             MaximizeConsoleWindow();
-        }
-
-        // NOTE: limit to 20 posts for testing purposes:
-        public void DisplayStories(List<Item> stories)
-        {
-            if(stories.Count < 1)
-            {
-                Console.WriteLine("No data to display.");
-            }
-
-            int count = (stories.Count <= 20) ? 20 : stories.Count;
-            for(int i = 0; i < count; i++)
-            {
-                Console.WriteLine("{0}.\t{1}", i + 1, stories[i].title);
-            }
-            Console.WriteLine("\nPress ESC to quit.");
+            hnService = new HnService();
         }
 
         public void NavigateStories(List<Item> stories, int cursorPosition)
@@ -73,8 +61,38 @@ namespace hn_console.Interface
                         Item story = stories[currentPosition];
                         Console.Clear();
                         Console.WriteLine("You have chosen topic: " + story.title);
+                        Console.ReadLine();
+                        Console.Clear();
+                        DisplayStoryComments(hnService.GetItemChildren(story), new StringBuilder());
+                        Console.ReadLine();
                         break;
                 }
+            }
+        }
+
+        // NOTE: limit to 20 posts for testing purposes:
+        public void DisplayStories(List<Item> stories)
+        {
+            if (stories.Count < 1)
+            {
+                Console.WriteLine("No data to display.");
+            }
+
+            int count = (stories.Count <= 20) ? 20 : stories.Count;
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine("{0}.\t{1}", i + 1, stories[i].title);
+            }
+            Console.WriteLine("\nPress ESC to quit.");
+        }
+
+        public void DisplayStoryComments(Item story, StringBuilder tabs)
+        {
+            Console.WriteLine("{0}{1}", tabs, story.text);
+            tabs.Append("\t");
+            foreach(Item child in story.children)
+            {
+                DisplayStoryComments(child, tabs);
             }
         }
 

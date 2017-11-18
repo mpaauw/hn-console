@@ -9,9 +9,11 @@ namespace hn_console.Interface
 {
     interface IConsoleService
     {
+        void NavigateStories(List<Item> stories, int cursorPosition);
+
         void DisplayStories(List<Item> stories);
 
-        void NavigateStories(List<Item> stories, int cursorPosition);
+        void DisplayStoryComments(Item story, StringBuilder tabs);
 
         void MaximizeConsoleWindow();
     }
