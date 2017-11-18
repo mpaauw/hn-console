@@ -41,6 +41,11 @@ namespace hn_console.Interface
             Console.WriteLine("\nPress ESC to quit.");
         }
 
+        public void NavigateStories(List<Item> stories)
+        {
+
+        }
+
         public void MaximizeConsoleWindow()
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
