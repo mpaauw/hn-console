@@ -46,7 +46,9 @@ namespace hn_console.Data
             List<Item> items = new List<Item>();
             for(int i = 0; i < _numStories; i++)
             {
-                items.Add(GetItem(itemIds[i]));
+                Item item = GetItem(itemIds[i]);
+                item.children = new List<Item>();
+                items.Add(item);
             }
             return items;
         }
@@ -63,8 +65,10 @@ namespace hn_console.Data
 
         public Item GetItemChildren(Item item)
         {
+            item.children = new List<Item>();
             if (item.kids == null)
             {
+                
                 return item;
             }
             item.children = new List<Item>();
