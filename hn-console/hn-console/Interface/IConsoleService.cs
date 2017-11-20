@@ -13,7 +13,7 @@ namespace hn_console.Interface
 
         void DisplayStories(List<Item> stories);
 
-        void DisplayStoryComments(Item story, StringBuilder tabs);
+        void DisplayStoryComments(Item story, int level);
 
         void MaximizeConsoleWindow();
     }

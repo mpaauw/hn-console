@@ -63,7 +63,7 @@ namespace hn_console.Interface
                         Console.WriteLine("You have chosen topic: " + story.title);
                         Console.ReadLine();
                         Console.Clear();
-                        DisplayStoryComments(hnService.GetItemChildren(story), new StringBuilder());
+                        DisplayStoryComments(hnService.GetItemChildren(story), 0);
                         Console.ReadLine();
                         break;
                 }
@@ -87,15 +87,19 @@ namespace hn_console.Interface
             Console.WriteLine("\nPress ESC to quit.");
         }
 
-        public void DisplayStoryComments(Item story, StringBuilder tabs)
+        public void DisplayStoryComments(Item story, int level)
         {
-            tabs.Append("\t");
+            StringBuilder tabs = new StringBuilder();
+            for(int i = 0; i < level; i++)
+            {
+                tabs.Append("\t");
+            }
             Console.WriteLine("{0}{1}", tabs, story.text);
+            level++;
             foreach (Item child in story.children)
             {
-                DisplayStoryComments(child, tabs);
+                DisplayStoryComments(child, level);
             }
-            return;
         }
 
         public void MaximizeConsoleWindow()
