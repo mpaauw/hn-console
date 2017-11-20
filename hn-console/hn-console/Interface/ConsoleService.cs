@@ -99,12 +99,14 @@ namespace hn_console.Interface
             if(story.text != null)
             {
                 PrintClean(story.text, level);
+                //Console.WriteLine();
             }
             level++;
             foreach (Item child in story.children)
             {
                 DisplayStoryComments(child, level);
             }
+            Console.WriteLine();
         }
 
         public void PrintClean(string content, int tabs)
@@ -126,7 +128,7 @@ namespace hn_console.Interface
                 // create a marker: newline followed by tabstring
                 string marker = "\n" + builder.ToString();
                 // appropriately place marker into every corresponding slot in content string
-                content = builder.ToString() + content;
+                //content = builder.ToString() + content;
                 int markerWindow = windowWidth - builder.Length;
                 for(int i = 0; i < content.Length; i += markerWindow)
                 {
