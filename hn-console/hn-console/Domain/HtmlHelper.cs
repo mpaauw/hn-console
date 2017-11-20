@@ -15,6 +15,7 @@ namespace hn_console.Domain
             html = html.Replace("&#x2F;", "/");
             html = html.Replace("&gt;", ">");
             html = html.Replace("&quot;", "\"");
+            html = html.Replace("\n", " ");
 
             return html;
         }
