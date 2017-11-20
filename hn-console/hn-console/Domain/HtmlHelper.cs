@@ -10,7 +10,7 @@ namespace hn_console.Domain
     {
         public static string SanitizeHtml(string html)
         {
-            html = html.Replace("<p>", "\n");
+            html = html.Replace("<p>", " ");
             html = html.Replace("&#x27;", "'");
             html = html.Replace("&#x2F;", "/");
             html = html.Replace("&gt;", ">");
