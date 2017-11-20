@@ -78,6 +78,7 @@ namespace hn_console.Interface
                 Console.WriteLine("No data to display.");
             }
 
+            // TEST DRIVER:
             int count = (stories.Count <= 20) ? 20 : stories.Count;
             for (int i = 0; i < count; i++)
             {
@@ -88,12 +89,13 @@ namespace hn_console.Interface
 
         public void DisplayStoryComments(Item story, StringBuilder tabs)
         {
-            Console.WriteLine("{0}{1}", tabs, story.text);
             tabs.Append("\t");
-            foreach(Item child in story.children)
+            Console.WriteLine("{0}{1}", tabs, story.text);
+            foreach (Item child in story.children)
             {
                 DisplayStoryComments(child, tabs);
             }
+            return;
         }
 
         public void MaximizeConsoleWindow()
