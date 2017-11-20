@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using hn_console.Model;
 using hn_console.Data;
+using System.IO;
+using hn_console.Domain;
 
 namespace hn_console.Data
 {
@@ -37,7 +39,12 @@ namespace hn_console.Data
         {
             string parameters = String.Format("item/{0}", itemId);
             RestService<Item> restService = new RestService<Item>();
-            return restService.GetJsonData(_endpoint, parameters, _endpointFormat, _acceptHeaders);
+            Item item = restService.GetJsonData(_endpoint, parameters, _endpointFormat, _acceptHeaders);
+            if(item.text != null)
+            {
+                item.text = HtmlHelper.SanitizeHtml(item.text);
+            }
+            return item;
         }
 
         public List<Item> GetItems()
@@ -81,5 +88,6 @@ namespace hn_console.Data
             }
             return item;
         }
+
     }
 }
