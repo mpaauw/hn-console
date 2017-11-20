@@ -20,6 +20,7 @@ namespace hn_console.Interface
         private const int MAXIMIZE = 3;
         private const int MINIMIZE = 6;
         private const int RESTORE = 9;
+        
 
         private HnService hnService;
 
@@ -89,17 +90,53 @@ namespace hn_console.Interface
 
         public void DisplayStoryComments(Item story, int level)
         {
-            StringBuilder tabs = new StringBuilder();
-            for(int i = 0; i < level; i++)
+            //StringBuilder tabs = new StringBuilder();
+            //for(int i = 0; i < level; i++)
+            //{
+            //    tabs.Append("        "); // 8 spaces
+            //}
+            //Console.WriteLine("{0}{1}", tabs, story.text);
+            if(story.text != null)
             {
-                tabs.Append("\t");
+                PrintClean(story.text, level);
             }
-            Console.WriteLine("{0}{1}", tabs, story.text);
             level++;
             foreach (Item child in story.children)
             {
                 DisplayStoryComments(child, level);
             }
+        }
+
+        public void PrintClean(string content, int tabs)
+        {
+            int windowWidth = Console.WindowWidth;
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < tabs; i++)
+            {
+                builder.Append("        "); // 8 spaces
+            }
+            //string printableContent = "";
+            //content = builder.ToString() + content;
+            if(content.Length <= windowWidth) // if spaces + content can fit on a single line
+            {
+                Console.WriteLine(builder.ToString() + content);
+            }
+            else // otherwise, split the content into multiple lines
+            {
+                // create a marker: newline followed by tabstring
+                string marker = "\n" + builder.ToString();
+                // appropriately place marker into every corresponding slot in content string
+                content = builder.ToString() + content;
+                int markerWindow = windowWidth - builder.Length;
+                for(int i = 0; i < content.Length; i += markerWindow)
+                {
+                    content = content.Insert(i, marker);
+                }
+                // write newly-modified content string
+                Console.WriteLine(content);
+            }
+
+
         }
 
         public void MaximizeConsoleWindow()
