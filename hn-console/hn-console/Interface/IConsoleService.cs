@@ -15,6 +15,10 @@ namespace hn_console.Interface
 
         void DisplayStoryComments(Item story, int level);
 
+        void PrintClean(string content, string contentDetails, int tabs);
+
+        string BuildContentDetails(Item item);
+
         void MaximizeConsoleWindow();
     }
 }
