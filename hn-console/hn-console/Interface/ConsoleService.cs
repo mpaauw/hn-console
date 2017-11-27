@@ -62,8 +62,9 @@ namespace hn_console.Interface
                         Item story = stories[currentPosition];
                         Console.Clear();
                         Console.WriteLine("You have chosen topic: " + story.title);
-                        Console.ReadLine();
-                        Console.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine("--------------------");
+                        Console.WriteLine();
                         DisplayStoryComments(hnService.GetItemChildren(story), 0);
                         Console.ReadLine();
                         break;
@@ -90,55 +91,49 @@ namespace hn_console.Interface
 
         public void DisplayStoryComments(Item story, int level)
         {
-            //StringBuilder tabs = new StringBuilder();
-            //for(int i = 0; i < level; i++)
-            //{
-            //    tabs.Append("        "); // 8 spaces
-            //}
-            //Console.WriteLine("{0}{1}", tabs, story.text);
             if(story.text != null)
             {
                 PrintClean(story.text, level);
-                //Console.WriteLine();
+                level++;
             }
-            level++;
+
             foreach (Item child in story.children)
             {
                 DisplayStoryComments(child, level);
             }
-            Console.WriteLine();
         }
 
         public void PrintClean(string content, int tabs)
         {
-            int windowWidth = Console.WindowWidth;
             StringBuilder builder = new StringBuilder();
             for(int i = 0; i < tabs; i++)
             {
                 builder.Append("        "); // 8 spaces
             }
-            //string printableContent = "";
-            //content = builder.ToString() + content;
-            if(content.Length <= windowWidth) // if spaces + content can fit on a single line
+
+            int windowWidth = Console.WindowWidth;
+            StringBuilder currentLine = new StringBuilder();
+            string[] words = content.Split(' ');
+            string stamp = "\n" + builder.ToString();
+            currentLine.Append(stamp);
+            
+            foreach(string word in words)
             {
-                Console.WriteLine(builder.ToString() + content);
-            }
-            else // otherwise, split the content into multiple lines
-            {
-                // create a marker: newline followed by tabstring
-                string marker = "\n" + builder.ToString();
-                // appropriately place marker into every corresponding slot in content string
-                //content = builder.ToString() + content;
-                int markerWindow = windowWidth - builder.Length;
-                for(int i = 0; i < content.Length; i += markerWindow)
+                if(currentLine.Length + word.Length + 1 < windowWidth)
                 {
-                    content = content.Insert(i, marker);
+                    currentLine.Append(word + ' ');
                 }
-                // write newly-modified content string
-                Console.WriteLine(content);
+                else
+                {
+                    Console.Write(currentLine.ToString());
+                    currentLine.Clear();
+                    currentLine.Append(stamp);
+                    currentLine.Append(word + ' ');
+                }
             }
 
-
+            Console.Write(currentLine.ToString());
+            Console.WriteLine();
         }
 
         public void MaximizeConsoleWindow()
