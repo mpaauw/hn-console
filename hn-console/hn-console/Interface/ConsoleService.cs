@@ -93,7 +93,7 @@ namespace hn_console.Interface
         {
             if(story.text != null)
             {
-                PrintClean(story.text, level);
+                PrintClean(story.text, BuildContentDetails(story), level);
                 level++;
             }
 
@@ -103,19 +103,23 @@ namespace hn_console.Interface
             }
         }
 
-        public void PrintClean(string content, int tabs)
+        public void PrintClean(string content, string contentDetails, int tabs)
         {
             StringBuilder builder = new StringBuilder();
             for(int i = 0; i < tabs; i++)
             {
                 builder.Append("        "); // 8 spaces
             }
-
+            string stamp = "\n" + builder.ToString();
             int windowWidth = Console.WindowWidth;
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(stamp + contentDetails); // write content details 
+            Console.ForegroundColor = ConsoleColor.White;
+
             StringBuilder currentLine = new StringBuilder();
             string[] words = content.Split(' ');
-            string stamp = "\n" + builder.ToString();
-            currentLine.Append(stamp);
+            currentLine.Append(builder.ToString());
             
             foreach(string word in words)
             {
@@ -134,6 +138,16 @@ namespace hn_console.Interface
 
             Console.Write(currentLine.ToString());
             Console.WriteLine();
+        }
+
+        public string BuildContentDetails(Item item)
+        {
+            string author = item.by;
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            TimeSpan span = DateTime.Now - dateTime.AddSeconds(Convert.ToInt64(item.time)).ToLocalTime();
+            string ageString = (span.Hours < 1) ? String.Format("{0} minutes ago", span.Minutes) : String.Format("{0} hours ago", span.Hours);
+            string contentDetails = String.Format("{0} - {1}", author, ageString);
+            return contentDetails; 
         }
 
         public void MaximizeConsoleWindow()
