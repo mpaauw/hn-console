@@ -93,7 +93,7 @@ namespace hn_console.Interface
         {
             if(story.text != null)
             {
-                PrintClean(story.text, BuildContentDetails(story), level);
+                PrintClean(story.text, BuildStoryContentDetails(story), level);
                 level++;
             }
 
@@ -140,7 +140,7 @@ namespace hn_console.Interface
             Console.WriteLine();
         }
 
-        public string BuildContentDetails(Item item)
+        public string BuildStoryContentDetails(Item item)
         {
             string author = item.by;
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
