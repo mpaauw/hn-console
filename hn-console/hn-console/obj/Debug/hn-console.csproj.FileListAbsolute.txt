@@ -9,3 +9,14 @@ C:\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.csprojR
 C:\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.csproj.CoreCompileInputs.cache
 C:\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.exe
 C:\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.pdb
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\hn-console.exe.config
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\hn-console.exe
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\hn-console.pdb
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.csprojResolveAssemblyReference.cache
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.csproj.CoreCompileInputs.cache
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.exe
+C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.pdb
