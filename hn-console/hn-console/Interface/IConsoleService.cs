@@ -17,7 +17,11 @@ namespace hn_console.Interface
 
         void PrintClean(string content, string contentDetails, int tabs);
 
+        string BuildStoryDetails(Item story);
+
         string BuildStoryContentDetails(Item item);
+
+        void SetConsoleColors();
 
         void MaximizeConsoleWindow();
     }

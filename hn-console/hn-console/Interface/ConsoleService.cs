@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using hn_console.Model;
 using System.Runtime.InteropServices;
 using hn_console.Data;
+using hn_console.Domain;
 
 namespace hn_console.Interface
 {
@@ -20,12 +21,19 @@ namespace hn_console.Interface
         private const int MAXIMIZE = 3;
         private const int MINIMIZE = 6;
         private const int RESTORE = 9;
+        private const ConsoleColor BACKGROUND_COLOR = ConsoleColor.DarkCyan;
+        private const ConsoleColor FOREGROUND_COLOR_DEFAULT = ConsoleColor.White;
+        private const ConsoleColor FOREGROUND_COLOR_STORY_SPECIAL = ConsoleColor.Yellow;
+        private const ConsoleColor FOREGROUND_COLOR_STORY_DETAILS = ConsoleColor.Gray;
+        private const ConsoleColor FOREGROUND_COLOR_ITEM_DETAILS = ConsoleColor.Cyan;
+
         
 
         private HnService hnService;
 
         public ConsoleService()
         {
+            SetConsoleColors();
             MaximizeConsoleWindow();
             hnService = new HnService();
         }
@@ -45,21 +53,21 @@ namespace hn_console.Interface
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (currentPosition < stories.Count - 1)
+                        if (currentPosition < (stories.Count * 2) - 2)
                         {
-                            currentPosition += 1;
+                            currentPosition += 2;
                         }
                         Console.SetCursorPosition(0, currentPosition);
                         break;
                     case ConsoleKey.UpArrow:
-                        if (currentPosition > 0)
+                        if (currentPosition > 1)
                         {
-                            currentPosition -= 1;
+                            currentPosition -= 2;
                         }
                         Console.SetCursorPosition(0, currentPosition);
                         break;
                     case ConsoleKey.Enter:
-                        Item story = stories[currentPosition];
+                        Item story = stories[currentPosition / 2];
                         Console.Clear();
                         Console.WriteLine("You have chosen topic: " + story.title);
                         Console.WriteLine();
@@ -84,7 +92,18 @@ namespace hn_console.Interface
             int count = (stories.Count <= 20) ? 20 : stories.Count;
             for (int i = 0; i < count; i++)
             {
-                Console.WriteLine("{0}.\t{1}", i + 1, stories[i].title);
+                //string storyDetails = BuildStoryDetails(stories[i]);
+                //Console.WriteLine("{0}.\t{1}", i + 1, stories[i].title);
+                Item story = stories[i];
+                Console.Write("{0}.\t{1} ", i + 1, story.title);
+                Console.ForegroundColor = FOREGROUND_COLOR_STORY_SPECIAL;
+                Console.WriteLine("({0})", HtmlHelper.DeriveSiteHost(story.url));
+                Console.ForegroundColor = FOREGROUND_COLOR_STORY_DETAILS;
+                Console.WriteLine("\t   {0}", BuildStoryDetails(story));
+                Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
+
+                //Console.WriteLine("{0}.\t{1} ({2})", i + 1, story.title, HtmlHelper.DeriveSiteHost(story.url));
+                //Console.WriteLine("\t\t{0}", BuildStoryDetails(story));
             }
             Console.WriteLine("\nPress ESC to quit.");
         }
@@ -113,9 +132,9 @@ namespace hn_console.Interface
             string stamp = "\n" + builder.ToString();
             int windowWidth = Console.WindowWidth;
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = FOREGROUND_COLOR_ITEM_DETAILS;
             Console.WriteLine(stamp + contentDetails); // write content details 
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
 
             StringBuilder currentLine = new StringBuilder();
             string[] words = content.Split(' ');
@@ -140,14 +159,33 @@ namespace hn_console.Interface
             Console.WriteLine();
         }
 
+        public string BuildStoryDetails(Item story)
+        {
+            // website from url
+            // ex: "500 points by brother 3 hours ago | 123 comments"
+
+            int score = story.score;
+            string author = story.by;
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            TimeSpan span = DateTime.Now - dateTime.AddSeconds(Convert.ToInt64(story.time)).ToLocalTime();
+            string ageString = (span.Hours < 1) ? String.Format("{0} minutes ago", span.Minutes) : String.Format("{0} hours ago", span.Hours);
+
+            return String.Format("{0} points by {1} {2}", score, author, ageString);
+        }
+
         public string BuildStoryContentDetails(Item item)
         {
             string author = item.by;
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             TimeSpan span = DateTime.Now - dateTime.AddSeconds(Convert.ToInt64(item.time)).ToLocalTime();
             string ageString = (span.Hours < 1) ? String.Format("{0} minutes ago", span.Minutes) : String.Format("{0} hours ago", span.Hours);
-            string contentDetails = String.Format("{0} - {1}", author, ageString);
-            return contentDetails; 
+            return String.Format("{0} - {1}", author, ageString);
+        }
+
+        public void SetConsoleColors()
+        {
+            Console.BackgroundColor = BACKGROUND_COLOR;
+            Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
         }
 
         public void MaximizeConsoleWindow()
