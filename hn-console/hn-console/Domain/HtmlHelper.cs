@@ -19,5 +19,11 @@ namespace hn_console.Domain
 
             return html;
         }
+
+        public static string DeriveSiteHost(string url)
+        {
+            Uri uri = new Uri(url);
+            return uri.Host;
+        }
     }
 }
