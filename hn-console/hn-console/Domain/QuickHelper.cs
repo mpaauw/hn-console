@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace hn_console.Domain
 {
-    public class HtmlHelper
+    public class QuickHelper
     {
         public static string SanitizeHtml(string html)
         {
