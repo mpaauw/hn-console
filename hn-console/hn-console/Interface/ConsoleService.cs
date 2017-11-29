@@ -21,7 +21,8 @@ namespace hn_console.Interface
         private const int MAXIMIZE = 3;
         private const int MINIMIZE = 6;
         private const int RESTORE = 9;
-        private const ConsoleColor BACKGROUND_COLOR = ConsoleColor.DarkCyan;
+        private const ConsoleColor BACKGROUND_COLOR_DEFAULT = ConsoleColor.DarkCyan;
+        private const ConsoleColor BACKGROUND_COLOR_ITEM_DETAILS = ConsoleColor.DarkMagenta;
         private const ConsoleColor FOREGROUND_COLOR_DEFAULT = ConsoleColor.White;
         private const ConsoleColor FOREGROUND_COLOR_STORY_SPECIAL = ConsoleColor.Yellow;
         private const ConsoleColor FOREGROUND_COLOR_STORY_DETAILS = ConsoleColor.Gray;
@@ -132,9 +133,12 @@ namespace hn_console.Interface
             string stamp = "\n" + builder.ToString();
             int windowWidth = Console.WindowWidth;
 
+            Console.Write(stamp);
             Console.ForegroundColor = FOREGROUND_COLOR_ITEM_DETAILS;
-            Console.WriteLine(stamp + contentDetails); // write content details 
+            Console.BackgroundColor = BACKGROUND_COLOR_ITEM_DETAILS;
+            Console.WriteLine(" " + contentDetails + " "); // write content details 
             Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
+            Console.BackgroundColor = BACKGROUND_COLOR_DEFAULT;
 
             StringBuilder currentLine = new StringBuilder();
             string[] words = content.Split(' ');
@@ -184,7 +188,7 @@ namespace hn_console.Interface
 
         public void SetConsoleColors()
         {
-            Console.BackgroundColor = BACKGROUND_COLOR;
+            Console.BackgroundColor = BACKGROUND_COLOR_DEFAULT;
             Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
         }
 
