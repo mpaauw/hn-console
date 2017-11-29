@@ -42,7 +42,7 @@ namespace hn_console.Data
             Item item = restService.GetJsonData(_endpoint, parameters, _endpointFormat, _acceptHeaders);
             if(item.text != null)
             {
-                item.text = HtmlHelper.SanitizeHtml(item.text);
+                item.text = QuickHelper.SanitizeHtml(item.text);
             }
             return item;
         }

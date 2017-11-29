@@ -97,7 +97,7 @@ namespace hn_console.Interface
                 Item story = stories[i];
                 Console.Write("{0}.\t{1} ", i + 1, story.title);
                 Console.ForegroundColor = FOREGROUND_COLOR_STORY_SPECIAL;
-                Console.WriteLine("({0})", HtmlHelper.DeriveSiteHost(story.url));
+                Console.WriteLine("({0})", QuickHelper.DeriveSiteHost(story.url));
                 Console.ForegroundColor = FOREGROUND_COLOR_STORY_DETAILS;
                 Console.WriteLine("\t   {0}", BuildStoryDetails(story));
                 Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
