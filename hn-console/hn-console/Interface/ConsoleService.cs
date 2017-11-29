@@ -17,6 +17,7 @@ namespace hn_console.Interface
         private static IntPtr ThisConsole = GetConsoleWindow();
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private const string CONSOLE_TITLE = "hn-console";
         private const int HIDE = 0;
         private const int MAXIMIZE = 3;
         private const int MINIMIZE = 6;
@@ -32,8 +33,7 @@ namespace hn_console.Interface
 
         public ConsoleService()
         {
-            SetConsoleColors();
-            MaximizeConsoleWindow();
+            SetConsoleDetails();
             hnService = new HnService();
         }
 
@@ -67,11 +67,7 @@ namespace hn_console.Interface
                         break;
                     case ConsoleKey.Enter:
                         Item story = stories[currentPosition / 2];
-                        Console.Clear();
-                        Console.WriteLine("You have chosen topic: " + story.title);
-                        Console.WriteLine();
-                        Console.WriteLine("--------------------");
-                        Console.WriteLine();
+                        DisplayStoryHeader(story);
                         DisplayStoryComments(hnService.GetItemChildren(story), 0);
                         Console.ReadLine();
                         break;
@@ -130,7 +126,7 @@ namespace hn_console.Interface
             Console.Write(stamp);
             Console.ForegroundColor = FOREGROUND_COLOR_ITEM_DETAILS;
             Console.BackgroundColor = BACKGROUND_COLOR_ITEM_DETAILS;
-            Console.WriteLine(" " + contentDetails + " "); // write content details 
+            Console.WriteLine(" " + contentDetails + " ");
             Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
             Console.BackgroundColor = BACKGROUND_COLOR_DEFAULT;
 
@@ -157,6 +153,23 @@ namespace hn_console.Interface
             Console.WriteLine();
         }
 
+        public void DisplayStoryHeader(Item story)
+        {
+            Console.Clear();
+            Console.Write("{0} ", story.title);
+            Console.ForegroundColor = FOREGROUND_COLOR_STORY_SPECIAL;
+            Console.WriteLine("({0})", QuickHelper.DeriveSiteHost(story.url));
+            Console.ForegroundColor = FOREGROUND_COLOR_STORY_DETAILS;
+            Console.WriteLine(BuildStoryDetails(story));
+            Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
+
+            for(int i = 0; i < Console.WindowWidth; i++)
+            {
+                Console.Write("_");
+            }
+            Console.WriteLine();
+        }
+
         public string BuildStoryDetails(Item story)
         {
             int score = story.score;
@@ -176,14 +189,11 @@ namespace hn_console.Interface
             return String.Format("{0} - {1}", author, ageString);
         }
 
-        public void SetConsoleColors()
+        public void SetConsoleDetails()
         {
+            Console.Title = CONSOLE_TITLE;
             Console.BackgroundColor = BACKGROUND_COLOR_DEFAULT;
             Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
-        }
-
-        public void MaximizeConsoleWindow()
-        {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             ShowWindow(ThisConsole, MAXIMIZE);
         }
