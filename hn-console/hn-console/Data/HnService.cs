@@ -18,13 +18,20 @@ namespace hn_console.Data
         private readonly string[] _acceptHeaders = { "application/json" };
         private const int _numStories = 20;
 
-        public HnService() { }
+        private TestRestSharpService _trsService;
+
+        public HnService()
+        {
+            _trsService = new TestRestSharpService();
+        }
 
         // NOTE: currently limited to # of posts specified within private vars
         public List<int> GetItemIds()
         {
-            RestService<List<int>> restService = new RestService<List<int>>();
-            List<int> itemIds = restService.GetJsonData(_endpoint, _endpointParams, _endpointFormat, _acceptHeaders);
+            //RestService<List<int>> restService = new RestService<List<int>>();
+            //List<int> itemIds = restService.GetJsonData(_endpoint, _endpointParams, _endpointFormat, _acceptHeaders);
+
+            List<int> itemIds = _trsService.GetItemIds(_endpoint, _endpointParams, _endpointFormat);
             for (int i = _numStories; i < itemIds.Count; i++) // remove all posts past a certain #; in order to save processing time
             {
                 itemIds.RemoveAt(i);
@@ -35,8 +42,11 @@ namespace hn_console.Data
         public Item GetItem(int itemId)
         {
             string parameters = String.Format("item/{0}", itemId);
-            RestService<Item> restService = new RestService<Item>();
-            Item item = restService.GetJsonData(_endpoint, parameters, _endpointFormat, _acceptHeaders);
+            //RestService<Item> restService = new RestService<Item>();
+            //Item item = restService.GetJsonData(_endpoint, parameters, _endpointFormat, _acceptHeaders);
+
+            Item item = _trsService.GetItem(_endpoint, parameters, _endpointFormat);
+
             if(item.text != null)
             {
                 item.text = QuickHelper.SanitizeHtml(item.text);
@@ -76,7 +86,7 @@ namespace hn_console.Data
                 return item;
             }
             item.children = new List<Item>();
-            for (int i = 0; i < item.kids.Length; i++)
+            for (int i = 0; i < item.kids.Count; i++)
             {
                 int kid = item.kids[i];
                 Item child = GetItem(kid);
