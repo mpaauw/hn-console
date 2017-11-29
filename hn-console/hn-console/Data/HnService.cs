@@ -18,10 +18,7 @@ namespace hn_console.Data
         private readonly string[] _acceptHeaders = { "application/json" };
         private const int _numStories = 20;
 
-        public HnService()
-        {
-
-        }
+        public HnService() { }
 
         // NOTE: currently limited to # of posts specified within private vars
         public List<int> GetItemIds()
@@ -88,6 +85,5 @@ namespace hn_console.Data
             }
             return item;
         }
-
     }
 }

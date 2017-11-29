@@ -15,9 +15,6 @@ namespace hn_console
             HnService hnService = new HnService();
             ConsoleService consoleService = new ConsoleService();
             consoleService.NavigateStories(hnService.GetItems(), 0);
-
-
-
             Console.ReadLine();
         }
     }

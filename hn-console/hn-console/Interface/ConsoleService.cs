@@ -28,8 +28,6 @@ namespace hn_console.Interface
         private const ConsoleColor FOREGROUND_COLOR_STORY_DETAILS = ConsoleColor.Gray;
         private const ConsoleColor FOREGROUND_COLOR_ITEM_DETAILS = ConsoleColor.Cyan;
 
-        
-
         private HnService hnService;
 
         public ConsoleService()
@@ -93,8 +91,6 @@ namespace hn_console.Interface
             int count = (stories.Count <= 20) ? 20 : stories.Count;
             for (int i = 0; i < count; i++)
             {
-                //string storyDetails = BuildStoryDetails(stories[i]);
-                //Console.WriteLine("{0}.\t{1}", i + 1, stories[i].title);
                 Item story = stories[i];
                 Console.Write("{0}.\t{1} ", i + 1, story.title);
                 Console.ForegroundColor = FOREGROUND_COLOR_STORY_SPECIAL;
@@ -102,9 +98,6 @@ namespace hn_console.Interface
                 Console.ForegroundColor = FOREGROUND_COLOR_STORY_DETAILS;
                 Console.WriteLine("\t   {0}", BuildStoryDetails(story));
                 Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
-
-                //Console.WriteLine("{0}.\t{1} ({2})", i + 1, story.title, HtmlHelper.DeriveSiteHost(story.url));
-                //Console.WriteLine("\t\t{0}", BuildStoryDetails(story));
             }
             Console.WriteLine("\nPress ESC to quit.");
         }
@@ -130,6 +123,7 @@ namespace hn_console.Interface
             {
                 builder.Append("        "); // 8 spaces
             }
+
             string stamp = "\n" + builder.ToString();
             int windowWidth = Console.WindowWidth;
 
@@ -165,15 +159,11 @@ namespace hn_console.Interface
 
         public string BuildStoryDetails(Item story)
         {
-            // website from url
-            // ex: "500 points by brother 3 hours ago | 123 comments"
-
             int score = story.score;
             string author = story.by;
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             TimeSpan span = DateTime.Now - dateTime.AddSeconds(Convert.ToInt64(story.time)).ToLocalTime();
             string ageString = (span.Hours < 1) ? String.Format("{0} minutes ago", span.Minutes) : String.Format("{0} hours ago", span.Hours);
-
             return String.Format("{0} points by {1} {2}", score, author, ageString);
         }
 
