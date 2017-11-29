@@ -77,6 +77,11 @@ namespace hn_console.Data
             return items;
         }
 
+        public async Task<Item> AsyncGetItemChildrenWrapper(Item item)
+        {
+            return await Task.Run(() => GetItemChildren(item));
+        }
+
         public Item GetItemChildren(Item item)
         {
             item.children = new List<Item>();
