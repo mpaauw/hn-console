@@ -4,6 +4,8 @@ namespace hn_console.Model
 {
     public class Item
     {
+        public Item() { }
+
         public int id { get; set; }
         public bool deleted { get; set; }
         public string type { get; set; }
@@ -13,12 +15,14 @@ namespace hn_console.Model
         public bool dead { get; set; }
         public int parent { get; set; }
         public int poll { get; set; }
-        public int[] kids { get; set; }
+        //public int[] kids { get; set; }
+        public List<int> kids { get; set; }
         public List<Item> children { get; set; }
         public string url { get; set; }
         public int score { get; set; }
         public string title { get; set; }
-        public int[] parts { get; set; }
+        //public int[] parts { get; set; }
+        public List<int> parts { get; set; }
         public int descendents { get; set; }
     }
 }
