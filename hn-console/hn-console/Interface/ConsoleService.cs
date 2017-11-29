@@ -22,10 +22,13 @@ namespace hn_console.Interface
         private const int MAXIMIZE = 3;
         private const int MINIMIZE = 6;
         private const int RESTORE = 9;
-        private const ConsoleColor BACKGROUND_COLOR_DEFAULT = ConsoleColor.DarkCyan;
+        private const ConsoleColor BACKGROUND_COLOR_DEFAULT = ConsoleColor.DarkBlue;
+        private const ConsoleColor BACKGROUND_COLOR_STORY_HEADER = ConsoleColor.Blue;
+        private const ConsoleColor BACKGROUND_COLOR_STORY_HEADER_DETAILS = ConsoleColor.Magenta;
         private const ConsoleColor BACKGROUND_COLOR_ITEM_DETAILS = ConsoleColor.DarkMagenta;
         private const ConsoleColor FOREGROUND_COLOR_DEFAULT = ConsoleColor.White;
         private const ConsoleColor FOREGROUND_COLOR_STORY_SPECIAL = ConsoleColor.Yellow;
+        private const ConsoleColor FOREGROUND_COLOR_STORY_HEADER_DETAILS = ConsoleColor.Magenta;
         private const ConsoleColor FOREGROUND_COLOR_STORY_DETAILS = ConsoleColor.Gray;
         private const ConsoleColor FOREGROUND_COLOR_ITEM_DETAILS = ConsoleColor.Cyan;
 
@@ -156,11 +159,13 @@ namespace hn_console.Interface
         public void DisplayStoryHeader(Item story)
         {
             Console.Clear();
-            Console.Write("{0} ", story.title);
+            Console.BackgroundColor = BACKGROUND_COLOR_STORY_HEADER;
+            Console.Write(" {0} ", story.title);
+            Console.BackgroundColor = BACKGROUND_COLOR_DEFAULT;
             Console.ForegroundColor = FOREGROUND_COLOR_STORY_SPECIAL;
-            Console.WriteLine("({0})", QuickHelper.DeriveSiteHost(story.url));
-            Console.ForegroundColor = FOREGROUND_COLOR_STORY_DETAILS;
-            Console.WriteLine(BuildStoryDetails(story));
+            Console.WriteLine(" ({0})", QuickHelper.DeriveSiteHost(story.url));
+            Console.ForegroundColor = FOREGROUND_COLOR_STORY_HEADER_DETAILS;
+            Console.WriteLine(" {0}", BuildStoryDetails(story));
             Console.ForegroundColor = FOREGROUND_COLOR_DEFAULT;
 
             for(int i = 0; i < Console.WindowWidth; i++)
