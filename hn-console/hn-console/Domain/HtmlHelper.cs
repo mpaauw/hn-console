@@ -10,13 +10,12 @@ namespace hn_console.Domain
     {
         public static string SanitizeHtml(string html)
         {
-            html = html.Replace("<p>", " ");
-            html = html.Replace("&#x27;", "'");
-            html = html.Replace("&#x2F;", "/");
-            html = html.Replace("&gt;", ">");
-            html = html.Replace("&quot;", "\"");
-            html = html.Replace("\n", " ");
-
+            html = html.Replace("<p>", " ")
+                .Replace("&#x27;", "'")
+                .Replace("&#x2F;", "/")
+                .Replace("&gt;", ">")
+                .Replace("&quot;", "\"")
+                .Replace("\n", " ");
             return html;
         }
 
