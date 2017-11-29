@@ -32,12 +32,12 @@ namespace hn_console.Interface
         private const ConsoleColor FOREGROUND_COLOR_STORY_DETAILS = ConsoleColor.Gray;
         private const ConsoleColor FOREGROUND_COLOR_ITEM_DETAILS = ConsoleColor.Cyan;
 
-        private HnService hnService;
+        private HnService _hnService;
 
         public ConsoleService()
         {
             SetConsoleDetails();
-            hnService = new HnService();
+            _hnService = new HnService();
         }
 
         public void NavigateStories(List<Item> stories, int cursorPosition)
@@ -69,13 +69,34 @@ namespace hn_console.Interface
                         Console.SetCursorPosition(0, currentPosition);
                         break;
                     case ConsoleKey.Enter:
-                        Item story = stories[currentPosition / 2];
-                        DisplayStoryHeader(story);
-                        DisplayStoryComments(hnService.GetItemChildren(story), 0);
-                        Console.ReadLine();
+                        LoadStoryContent(stories[currentPosition / 2]);
                         break;
                 }
             }
+        }
+
+        public void LoadStoryContent(Item story)
+        {
+            Loader loader = new Loader();
+
+            DisplayStoryHeader(story);
+            var getItemChildrenTask = _hnService.AsyncGetItemChildrenWrapper(story);
+
+            Console.Write("Loading thread content ");
+            Console.CursorVisible = false;
+
+            while (!getItemChildrenTask.IsCompleted)
+            {
+                loader.Rotate();
+            }
+
+            Console.Clear();
+            Console.CursorVisible = true;
+
+            DisplayStoryHeader(story);
+            DisplayStoryComments(getItemChildrenTask.Result, 0);
+
+            Console.ReadLine();
         }
 
         // NOTE: limit to 20 posts for testing purposes:
