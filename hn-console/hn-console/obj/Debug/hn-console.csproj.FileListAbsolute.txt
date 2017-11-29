@@ -20,3 +20,4 @@ C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Deb
 C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.csproj.CoreCompileInputs.cache
 C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.exe
 C:\Users\Matt\Documents\GitRepositories\hn-console\hn-console\hn-console\obj\Debug\hn-console.pdb
+C:\GitRepositories\hn-console\hn-console\hn-console\bin\Debug\RestSharp.dll
