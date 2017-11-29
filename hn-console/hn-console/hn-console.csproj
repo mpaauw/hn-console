@@ -54,12 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\HnService.cs" />
-    <Compile Include="Data\IHnService.cs" />
-    <Compile Include="Data\IRestService.cs" />
     <Compile Include="Data\TestRestSharpService.cs" />
     <Compile Include="Domain\QuickHelper.cs" />
     <Compile Include="Interface\ConsoleService.cs" />
-    <Compile Include="Interface\IConsoleService.cs" />
+    <Compile Include="Interface\Loader.cs" />
     <Compile Include="Model\ItemType.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Data\RestService.cs" />
