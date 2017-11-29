@@ -10,7 +10,7 @@ using hn_console.Domain;
 
 namespace hn_console.Data
 {
-    class HnService : IHnService
+    class HnService
     {
         private const string _endpoint = @"https://hacker-news.firebaseio.com/v0/";
         private string _endpointParams = @"topstories";

@@ -10,7 +10,7 @@ using hn_console.Domain;
 
 namespace hn_console.Interface
 {
-    public class ConsoleService : IConsoleService
+    public class ConsoleService
     {
         [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();

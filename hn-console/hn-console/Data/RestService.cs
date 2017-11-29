@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace hn_console.Data
 {
-    class RestService<T> : IRestService<T>
+    class RestService<T>
     {
         private JavaScriptSerializer serializer;
 
