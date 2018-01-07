@@ -12,9 +12,21 @@ namespace hn_console
     {
         static void Main(string[] args)
         {
+            Loader loader = new Loader();
             HnService hnService = new HnService();
             ConsoleService consoleService = new ConsoleService();
-            consoleService.NavigateStories(hnService.GetItems(), 0);
+
+            var getItemsTask = hnService.AsyncGetItemsWrapper();
+            Console.Write("Loading stories ");
+            Console.CursorVisible = false;
+            while (!getItemsTask.IsCompleted)
+            {
+                loader.Rotate();
+            }
+            Console.Clear();
+            Console.CursorVisible = true;
+
+            consoleService.NavigateStories(getItemsTask.Result, 0);
             Console.ReadLine();
         }
     }
