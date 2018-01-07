@@ -54,6 +54,11 @@ namespace hn_console.Data
             return item;
         }
 
+        public async Task<List<Item>> AsyncGetItemsWrapper()
+        {
+            return await Task.Run(() => GetItems());
+        }
+
         public List<Item> GetItems()
         {
             List<int> itemIds = GetItemIds();
